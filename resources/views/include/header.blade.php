@@ -51,11 +51,12 @@
                       <a href="#">
                         <div class="pull-left">
                           <!-- User Image -->
-                          <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                          <span > <i class="fa fa-user"></i> </span>
+                          <!-- <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
                         </div>
                         <!-- Message title and timestamp -->
                         <h4>
-                          Support Team
+                          Support Team1
                           <small><i class="fa fa-clock-o"></i> 5 mins</small>
                         </h4>
                         <!-- The message -->
@@ -135,15 +136,14 @@
               <!-- Menu Toggle Button -->
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
-                <img src="../../dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+                <i class="fa fa-user"></i>
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                 <span class="hidden-xs">Alexander Pierce</span>
               </a>
               <ul class="dropdown-menu">
                 <!-- The user image in the menu -->
                 <li class="user-header">
-                  <img src="../../dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-
+                  <i class="fa fa-user"></i>
                   <p>
                     Alexander Pierce - Web Developer
                     <small>Member since Nov. 2012</small>
