@@ -7,4 +7,4 @@
       reserved.
     </div>
     <!-- /.container -->
-  </footer>
+ </footer>

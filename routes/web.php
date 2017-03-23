@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('index');
 });
+
+Route::get('/v2', function () {
+    return view('sidenav');
+});

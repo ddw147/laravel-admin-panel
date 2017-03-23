@@ -40,6 +40,7 @@
   </div>
   <!-- /.content-wrapper -->
     @include('include.footer')
+    @include('include.control-sidebar')
 </div>
 <!-- ./wrapper -->
 
