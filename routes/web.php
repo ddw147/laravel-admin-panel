@@ -13,8 +13,12 @@
 
 Route::get('/', function () {
     return view('index');
-});
+})->middleware('auth');
 
 Route::get('/v2', function () {
     return view('sidenav');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
