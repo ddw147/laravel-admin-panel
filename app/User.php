@@ -4,7 +4,9 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-
+use App\Otp;
+use Carbon\Carbon;
+use App\Notifications\OtpNotification;
 class User extends Authenticatable
 {
     use Notifiable;
@@ -26,4 +28,35 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    public function sendotp()
+    {
+        
+       $otp= $this->otps->where('created_at','>=' , Carbon::now()->subHour())->last();
+       if(is_null($otp))
+        $otp= $this->setotp();
+
+        $this->notify(new OtpNotification($otp));
+
+    }
+
+    public function setotp()
+    {
+       $otp= new Otp();     
+       $otp->otp=rand(100000,999999);
+       $otp->purpose ='Registration';
+       $this->otps()->save($otp);
+
+       return $otp;
+
+    }
+
+
+   
+
+    public function otps()
+    {
+        return $this->hasMany('App\Otp');
+    }
+
 }

@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->middleware('auth');
+Route::get('/', 'HomeController@index')->middleware('auth','verified');
 
 Route::get('/v2', function () {
     return view('sidenav');
@@ -24,3 +22,6 @@ Auth::routes();
 Route::get('/home',  function () {
     return view('index');
 });
+
+Route::get('otpverification','OtpController@show');
+Route::post('resend-otp','OtpController@resendOtp');

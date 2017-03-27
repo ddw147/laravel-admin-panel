@@ -17,8 +17,9 @@ class RedirectIfUnverified
     public function handle($request, Closure $next)
     {
 
-        if(Auth::user()->is_verified)
+        if(!Auth::user()->is_verified)
             {
+                Auth::user()->sendotp();
                 return redirect('/otpverification');
             }
 

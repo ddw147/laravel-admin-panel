@@ -16,8 +16,8 @@ class AlterUserAddDetails extends Migration
         //
         Schema::table('users', function($table) {
             $table->string('mobile');
-            $table->boolean('is_verified');
-            $table->string('otp')->nullable();
+            $table->boolean('is_verified')->default(false);
+            $table->boolean('is_locked')->default(false);
             $table->string('fcm_token')->nullable();
             $table->string('api_token', 60)->nullable()->unique();
         });
@@ -34,7 +34,6 @@ class AlterUserAddDetails extends Migration
         Schema::table('users', function($table) {
             $table->dropColumn('mobile');
             $table->dropColumn('is_verified');
-            $table->dropColumn('otp');
             $table->dropColumn('fcm_token');
             $table->dropColumn('api_token');
         });
