@@ -202,7 +202,7 @@
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                <i class="fa fa-user"></i>
                        <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
-              <span class="hidden-xs">Alexander Pierce</span>
+              <span class="hidden-xs">{{Auth::user()->name}}</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
@@ -211,8 +211,8 @@
                        <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">-->
 
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  {{Auth::user()->name}}
+                  <small>Member since {{Auth::user()->created_at->diffForHumans(null,true)}}</small>
                 </p>
               </li>
               <!-- Menu Body -->

@@ -9,7 +9,7 @@
 	<form  class="form-horizontal"   method="post" action="{{ url('/login') }}">
     {{ csrf_field() }}
 	  <div class="form-group has-feedback">
-        <input type="email" id="email" name="email"  class="form-control" placeholder="Email"  value="{{ old('email') }}"  autofocus>
+        <input type="text" id="login" name="login"  class="form-control" placeholder="Email or Mobile "  value="{{ old('email') }}"  autofocus>
       	<span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       	 @if ($errors->has('email'))
             <span class="help-block">
@@ -27,6 +27,7 @@
 	        </span>
     	@endif
 
+       
       </div>
       <div class="row">
         <div class="col-xs-8">
