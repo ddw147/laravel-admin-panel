@@ -33,4 +33,15 @@
 <!-- AdminLTE for demo purposes -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/demo.js"></script>
 
+{{-- this form is for send post request using links --}}
+<form id="postform" action="" method="POST" style="display: none;">{{ csrf_field() }}</form>
+
+{{-- script for handling click event of link for post request --}}
+<script type="text/javascript">
+$(".btnpost").click(function(e) {
+	e.preventDefault();
+	console.log('asdasd');
+	$("#postform").attr('action', $(this).attr('href')).submit();
+})
+</script>
 
