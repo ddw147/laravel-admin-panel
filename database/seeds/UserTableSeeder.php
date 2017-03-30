@@ -26,7 +26,7 @@ class UserTableSeeder extends Seeder
     		
     		User::create($user);
     	}
-
+        
 
 
     }

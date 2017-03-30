@@ -11,11 +11,17 @@
 |
 */
 
-Route::get('/', 'HomeController@index')->middleware('auth','verified');
+Route::group(['middleware' => ['auth','verified']], function() {
 
-Route::get('/v2', function () {
-    return view('sidenav');
+	Route::get('/', 'HomeController@index');
+
+	Route::get('/v2', function () {
+	    return view('index');
+	});
+
+    Route::resource('users','UserController');
 });
+
 
 Auth::routes();
 
