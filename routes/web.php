@@ -24,4 +24,5 @@ Route::get('/home',  function () {
 });
 
 Route::get('otpverification','OtpController@show');
+Route::post('otpverification','OtpController@verify');
 Route::post('resend-otp','OtpController@resendOtp');

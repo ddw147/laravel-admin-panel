@@ -32,13 +32,19 @@ class User extends Authenticatable
     public function sendotp()
     {
         
-       $otp= $this->otps->where('created_at','>=' , Carbon::now()->subHour())->last();
+       $otp= $this->lastotp();
        if(is_null($otp))
-        $otp= $this->setotp();
+         $otp= $this->setotp();
 
         $this->notify(new OtpNotification($otp));
 
     }
+
+    public function lastotp()
+    {
+        return  $this->otps->where('created_at','>=' , Carbon::now()->subHour())->last();
+    }
+
 
     public function setotp()
     {
@@ -51,7 +57,11 @@ class User extends Authenticatable
 
     }
 
-
+    public function verify()
+    {
+        $this->is_verified=true;
+        $this->save();
+    }
    
 
     public function otps()

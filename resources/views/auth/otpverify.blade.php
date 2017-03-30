@@ -25,4 +25,4 @@
        </div>
      </form>
      <a href="/resend-otp" class="btnpost" class="text-center">Resend OTP</a>
-  @endsection 	
+  @endsection
