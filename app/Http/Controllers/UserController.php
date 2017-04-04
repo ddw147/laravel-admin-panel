@@ -66,9 +66,8 @@ class UserController extends Controller
     {
         $user  = User::create($request->all());
         $roles = $request->input('roles');
-        if(!is_null($roles))
-           foreach ($roles as $key => $role) 
-                $user->attachRole($role);
+         if(!is_null($roles))
+            $user->roles()->sync($roles);
 
         return redirect('/users')->with('status','User Successfully added');
 

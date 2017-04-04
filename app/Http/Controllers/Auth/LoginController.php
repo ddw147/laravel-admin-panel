@@ -42,10 +42,17 @@ class LoginController extends Controller
 	public function login(LoginRequest $request)
 	{
 		$field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
-		$request->merge([$field => $request->input('login')]);
+		$request->merge([$field => $request->input('login') ]);
 
 		if (Auth::attempt($request->only($field, 'password')))
-		{
+		{	
+			if(Auth::user()->is_locked)
+				{
+					Auth::logout();
+					return redirect('/login')->withErrors([
+						'email' => 'These credentials are blcoked please contact us for unblocking.',
+						]);
+				}
 			return redirect('/');
 		}
 
