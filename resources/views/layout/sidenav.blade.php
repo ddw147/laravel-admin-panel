@@ -35,3 +35,4 @@
 <!-- ./wrapper -->
 </body>
 </html>
+@yield('script')

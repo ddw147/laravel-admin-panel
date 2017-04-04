@@ -19,12 +19,22 @@ class RolesSeeder extends Seeder
         //
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::statement('truncate table permission_role');
+        DB::statement('truncate table role_user');
         Role::truncate();
         Permission::truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
-    	$role= ['name'=>'owner','display_name'=>'Project Owner','description'=>'manage all user'];
+    	$roles= [
+                    ['name'=>'owner','display_name'=>'Project Owner','description'=>'manage all user'],
+                    ['name'=>'moderator','display_name'=>'Project moderator','description'=>'manage all user'],
+                    ['name'=>'manager','display_name'=>'Project manager','description'=>'manage all user'],
+                ];
 
-    	$owner= Role::create($role);
+        foreach ($roles as $key => $role) {
+            Role::create($role);
+        }
+    	
+
+        $owner=Role::findorfail(1);
     	$user= User::findorfail(1);
     	$user->attachRole($owner);
 

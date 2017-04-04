@@ -47,3 +47,4 @@
   @include('include.scripts')
 </body>
 </html>
+@yield('script')

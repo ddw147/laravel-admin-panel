@@ -67,6 +67,18 @@ class User extends Authenticatable
         $this->is_verified=true;
         $this->save();
     }
+
+    public function block()
+    {
+        $this->is_locked=true;
+        $this->save();
+    }
+
+    public function unblock()
+    {
+        $this->is_locked=false;
+        $this->save();
+    }
    
 
     public function otps()

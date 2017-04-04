@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
+use App\Role;
+
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -30,10 +33,15 @@ class UserController extends Controller
         if(!empty($request->input('email')))
             $query->where('email','like','%'. $request->input('email'). '%');
 
+        if(!empty($request->input('is_locked')))
+                $query->where('is_locked',$request->input('is_locked'));
 
-        $users = $query->paginate(10);
+        $users = $query->with('roles')->paginate(10);
 
-        return view('user.index' ,compact('users','searchable'));
+
+
+
+        return view('user.index' ,compact('users'));
     }
 
     /**
@@ -44,6 +52,8 @@ class UserController extends Controller
     public function create()
     {
         //
+        $roles= Role::all();
+        return view('user.create',compact('roles'));
     }
 
     /**
@@ -52,9 +62,16 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        //
+        $user  = User::create($request->all());
+        $roles = $request->input('roles');
+        if(!is_null($roles))
+           foreach ($roles as $key => $role) 
+                $user->attachRole($role);
+
+        return redirect('/users')->with('status','User Successfully added');
+
     }
 
     /**
@@ -77,6 +94,10 @@ class UserController extends Controller
     public function edit(User $user)
     {
         //
+        $user->load('roles');
+        $roles= Role::all();
+        return view('user.edit',compact('user','roles'));
+
     }
 
     /**
@@ -89,6 +110,18 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         //
+        $user->fill($request->all())->save();
+         $roles = $request->input('roles');
+         if(!is_null($roles))
+            $user->roles()->sync($roles);
+
+        $redirects_to = $request->get('redirects_to');
+
+        if(is_null($redirects_to))
+            $redirects_to ='/users';
+
+        return redirect($redirects_to)->with('status','User Successfully Updated');
+
     }
 
     /**
@@ -100,5 +133,16 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+    public function block_user(Request $request, User $user)
+    {
+       $user->block();
+       return redirect()->back()->with('status','User Blcoked Successfully');
+    }
+    public function unblock_user(Request $request, User $user)
+    {
+       $user->unblock();
+       return redirect()->back()->with('status','User Unblcoked Successfully');
     }
 }

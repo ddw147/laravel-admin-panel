@@ -18,8 +18,9 @@ Route::group(['middleware' => ['auth','verified']], function() {
 	Route::get('/v2', function () {
 	    return view('index');
 	});
-
     Route::resource('users','UserController');
+    Route::post('users-block/{user}','UserController@block_user');
+    Route::post('users-unblock/{user}','UserController@unblock_user');
 });
 
 
