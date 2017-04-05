@@ -86,4 +86,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Otp');
     }
 
+    public function verify_password($oldPassword='')
+    {   
+        echo bcrypt($oldPassword);
+        dd($this->password);
+        return ($this->password == (bcrypt($oldPassword)) ); 
+    }
+
 }

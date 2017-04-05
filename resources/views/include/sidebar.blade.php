@@ -26,7 +26,7 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>
             <span class="pull-right-container">
@@ -38,7 +38,7 @@
             <li><a href="/v2"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
           </ul>
         </li>
-        
+       @if(Auth::user()->hasrole('owner')) 
         <li class="treeview">
           <a href="#">
             <i class="fa fa-users"></i> <span>User Management</span>
@@ -47,6 +47,14 @@
                <li><a href="/users"><i class="fa fa-users"></i>List</a></li>
           </ul>
         </li>
+        @endif
+
+        <li  >
+          <a href="/change-password">
+          <i class="fa fa-lock"></i>
+            Change Password</a></li>
+
+
       </ul>
     </section>
     <!-- /.sidebar -->

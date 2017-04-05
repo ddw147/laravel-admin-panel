@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use App\Role;
-
+use Validator;
 use App\Http\Requests\UserRequest;
+use Auth;
 
 class UserController extends Controller
 {
@@ -143,5 +144,29 @@ class UserController extends Controller
     {
        $user->unblock();
        return redirect()->back()->with('status','User Unblcoked Successfully');
+    }
+
+    public function showchangepassword()
+    {
+        return view('user.change-password');
+    }
+    public function updatepassword(Request $request)
+    {
+        $user = Auth::user();
+        $validator =  Validator::make($request->all(), [
+            'exiting-password'=>'required|',
+            'password' => 'required|min:6|confirmed',
+
+        ]);
+
+         if ($validator->fails()) {
+            return redirect()->back()
+                        ->withErrors($validator);
+        }
+        dd($request->input('exiting-password'));
+
+        if(!$user->verify_password($request->input('exiting-password')))
+                return redirect()->back()->withErrors(['Please enter Correct Old Password']);
+
     }
 }

@@ -13,14 +13,26 @@
 
 Route::group(['middleware' => ['auth','verified']], function() {
 
+
+
 	Route::get('/', 'HomeController@index');
 
 	Route::get('/v2', function () {
 	    return view('index');
 	});
-    Route::resource('users','UserController');
-    Route::post('users-block/{user}','UserController@block_user');
-    Route::post('users-unblock/{user}','UserController@unblock_user');
+
+	//admin tasks
+	Route::group(['middleware' => 'role:owner'], function() {
+	    //
+	    Route::resource('users','UserController');
+	    Route::post('users-block/{user}','UserController@block_user');
+	    Route::post('users-unblock/{user}','UserController@unblock_user');
+	});
+
+
+	Route::get('change-password','UserController@showchangepassword');
+	Route::post('change-password','UserController@updatepassword');
+
 });
 
 
