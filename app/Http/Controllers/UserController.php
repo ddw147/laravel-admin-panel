@@ -8,6 +8,7 @@ use App\Role;
 use Validator;
 use App\Http\Requests\UserRequest;
 use Auth;
+use Hash;
 
 class UserController extends Controller
 {
@@ -163,10 +164,19 @@ class UserController extends Controller
             return redirect()->back()
                         ->withErrors($validator);
         }
-        dd($request->input('exiting-password'));
-
-        if(!$user->verify_password($request->input('exiting-password')))
+       
+     
+        
+        if (!(Hash::check($request->input('exiting-password'), $user->password)))  
                 return redirect()->back()->withErrors(['Please enter Correct Old Password']);
+
+        
+        $user->fill([
+            'password' => Hash::make($request->input('password'))
+        ])->save();
+
+
+         return redirect()->back()->with(['status'=>'Password Updated Successfully']);   
 
     }
 }

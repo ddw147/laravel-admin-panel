@@ -28,6 +28,14 @@
 			@endforeach
 			</ul>
 
+			 @if (session('status'))
+		    
+				@component('alerts.success')
+				    	 {{session('status')}}
+				@endcomponent
+				   
+			@endif
+
 			{!! Form::open(['url' => '/change-password' ,'class'=>'form-horizontal']) !!}
 
 
