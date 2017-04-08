@@ -7,9 +7,12 @@
     <p class="login-box-msg">Register a new membership</p>
 
     <form action="" method="post">
+
     {{ csrf_field() }}
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Full name" name="name" id="name" required value="{{old('name')}}">
+        
+
+        {{Form::text('name',session('name'),['class'=>'form-control' , 'placeholder'=>'Full Name' ,'required'])}}
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
          @if ($errors->has('name'))
             <span class="help-block">
@@ -18,7 +21,10 @@
         @endif
       </div>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email" name="email" id="email"  value="{{old('email')}}" required> 
+        
+
+        {{Form::email('email',session('email'),['class'=>'form-control' , 'placeholder'=>'Email ID ','required'])}}
+
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
          @if ($errors->has('email'))
             <span class="help-block">
@@ -56,6 +62,13 @@
             </label>
           </div>
         </div>
+     
+      
+        
+           {{Form::hidden('provider',session('provider'))}}
+
+           {{Form::hidden('token',session('token'))}} 
+
         <!-- /.col -->
         <div class="col-xs-4">
           <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>

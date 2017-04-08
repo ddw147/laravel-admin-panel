@@ -35,4 +35,10 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'github' => [
+        'client_id' => env('GITHUB_KEY'),
+        'client_secret' => env('GITHUB_APP_SECRET'),
+        'redirect' => 'http://laraveladmin5.dev/login/github/callback',
+    ],
+
 ];

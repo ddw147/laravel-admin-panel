@@ -34,6 +34,47 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    /**
+     * users relationsships
+     */
+
+
+    public function otps()
+    {
+        return $this->hasMany('App\Otp');
+    }
+
+    /**
+     * get last otp
+     */
+    public function lastotp()
+    {
+        return  $this->otps->where('created_at','>=' , Carbon::now()->subHour())->last();
+    }
+
+    /**
+     * get Oauth Tokens
+     */
+
+    public function tokens()
+    {
+        return $this->hasMany('App\OauthToken');
+    }
+
+    /**
+     * get providers toekn
+     */
+
+    public function token($provider='')
+    {
+        return $this->tokens->where('provider',$provider)->last();
+    }
+
+
+    /**
+     *  user methods 
+     */
+
     public function sendotp()
     {
         
@@ -44,12 +85,6 @@ class User extends Authenticatable
         $this->notify(new OtpNotification($otp));
 
     }
-
-    public function lastotp()
-    {
-        return  $this->otps->where('created_at','>=' , Carbon::now()->subHour())->last();
-    }
-
 
     public function setotp()
     {
@@ -81,10 +116,7 @@ class User extends Authenticatable
     }
    
 
-    public function otps()
-    {
-        return $this->hasMany('App\Otp');
-    }
+    
 
     public function verify_password($oldPassword='')
     {   

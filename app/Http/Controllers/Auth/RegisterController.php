@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\OauthToken;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -72,6 +73,9 @@ class RegisterController extends Controller
             'mobile'=>$data['mobile'],
             'is_verified'=>false
         ]);
+
+        $token = new OauthToken($data);
+        $user->tokens()->save($token);
 
         event(new UserRegistered($user));
     

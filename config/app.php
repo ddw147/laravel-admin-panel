@@ -64,7 +64,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kolkata',
 
     /*
     |--------------------------------------------------------------------------
@@ -183,6 +183,9 @@ return [
         //laravel collective
         Collective\Html\HtmlServiceProvider::class,
 
+        //socialite
+         Laravel\Socialite\SocialiteServiceProvider::class,
+
     ],
 
     /*
@@ -234,6 +237,8 @@ return [
         'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
         'Form' => Collective\Html\FormFacade::class,
         'Html' => Collective\Html\HtmlFacade::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
+
 
 
     ],
