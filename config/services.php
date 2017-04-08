@@ -38,7 +38,13 @@ return [
     'github' => [
         'client_id' => env('GITHUB_KEY'),
         'client_secret' => env('GITHUB_APP_SECRET'),
-        'redirect' => 'http://laraveladmin5.dev/login/github/callback',
+        'redirect' => 'http://laraveladmin5.dev/login/callback/github',
+    ],
+
+    'facebook' => [
+        'client_id' => env('FB_KEY'),
+        'client_secret' => env('FB_SECRET'),
+        'redirect' => 'http://laraveladmin5.dev/login/callback/facebook',
     ],
 
 ];

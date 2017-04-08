@@ -70,20 +70,21 @@ class LoginController extends Controller
 		return view('auth.login');
 	}
 
-	  public function redirectToProvider()
+	  public function redirectToProvider($provider)
     {
-        return Socialite::driver('github')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
 
-     public function handleProviderCallback()
+     public function handleProviderCallback($provider)
     {
-        $github_user = Socialite::driver('github')->user();
-        //dd($github_user); 
+        	
 
+        $github_user = Socialite::driver($provider)->user();
+        
         $user = User::where('email',$github_user->email)->first();
 
-        $token= ['token'=>$github_user->token,'provider'=>'github', 'email'=>$github_user->email,'name'=>$github_user->name];
+        $token= ['token'=>$github_user->token,'provider'=>$provider, 'email'=>$github_user->email,'name'=>$github_user->name];
         $OauthToken = new OauthToken($token);
 
         if(is_null($user))
@@ -92,8 +93,5 @@ class LoginController extends Controller
          	$user->tokens()->save($OauthToken);
         	Auth::login($user);
         	return redirect('/');
-
-
-
     }
 }

@@ -45,5 +45,9 @@ Route::get('/home',  function () {
 Route::get('otpverification','OtpController@show');
 Route::post('otpverification','OtpController@verify');
 Route::post('resend-otp','OtpController@resendOtp');
-Route::get('login/github', 'Auth\LoginController@redirectToProvider');
-Route::get('login/github/callback', 'Auth\LoginController@handleProviderCallback');
+
+Route::get('login/callback/{provider}', 'Auth\LoginController@handleProviderCallback');
+Route::get('login/redirect/{provider}', 'Auth\LoginController@redirectToProvider');
+
+
+ 
