@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
+
 class OtpController extends Controller
 {
     //
@@ -23,14 +24,14 @@ class OtpController extends Controller
          $otp=$request->input('otp');
          $user = Auth::user();
          $lastotp = $user->lastotp();
-        if(is_null($lastotp)) {
+        if (is_null($lastotp)) {
             abort(403, 'SomeThing Bad Happend');
         }
 
-        if($otp==$lastotp->otp) {
+        if ($otp==$lastotp->otp) {
             $user->verify();
             return redirect('/');
-        }    
+        }
 
          return redirect()->back()->withErrors(['otp'=>'OTP did not match']);
     }

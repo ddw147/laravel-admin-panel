@@ -18,7 +18,6 @@ class RegisterListner
     public function __construct()
     {
         //
-
     }
 
     /**

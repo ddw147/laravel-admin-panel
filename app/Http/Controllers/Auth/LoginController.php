@@ -10,7 +10,6 @@ use App\User;
 use App\OauthToken;
 use Socialite;
 
-
 class LoginController extends Controller
 {
     /*
@@ -48,8 +47,8 @@ class LoginController extends Controller
         $field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
         $request->merge([$field => $request->input('login') ]);
 
-        if (Auth::attempt($request->only($field, 'password'))) {    
-            if(Auth::user()->is_locked) {
+        if (Auth::attempt($request->only($field, 'password'))) {
+            if (Auth::user()->is_locked) {
                  Auth::logout();
                  return redirect('/login')->withErrors(
                      [
@@ -67,7 +66,7 @@ class LoginController extends Controller
         );
     }
         
-    public function showLoginForm($value='')
+    public function showLoginForm($value = '')
     {
         return view('auth.login');
     }
@@ -86,10 +85,15 @@ class LoginController extends Controller
         
         $user = User::where('email', $github_user->email)->first();
 
-        $token= ['token'=>$github_user->token,'provider'=>$provider, 'email'=>$github_user->email,'name'=>$github_user->name];
+        $token= [
+                    'token'=>$github_user->token,
+                    'provider'=>$provider,
+                    'email'=>$github_user->email,
+                    'name'=>$github_user->name
+                ];
         $OauthToken = new OauthToken($token);
 
-        if(is_null($user)) {
+        if (is_null($user)) {
             return redirect('/register')->with($token);
         }
                 

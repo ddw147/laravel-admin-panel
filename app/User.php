@@ -15,6 +15,7 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use App\Otp;
 use Carbon\Carbon;
 use App\Notifications\OtpNotification;
+use Hash;
 
 /**
  * Class user will bind with users table
@@ -124,14 +125,9 @@ class User extends Authenticatable
         $this->is_locked=false;
         $this->save();
     }
-   
-
     
-
-    public function verify_password($oldPassword = '')
+    public function verifyPassword($newPassword)
     {
-        echo bcrypt($oldPassword);
-        dd($this->password);
-        return ($this->password == (bcrypt($oldPassword)) );
+        return  Hash::check($newPassword, $this->password);
     }
 }

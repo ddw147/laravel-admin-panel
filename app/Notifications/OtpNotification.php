@@ -48,8 +48,6 @@ class OtpNotification extends Notification
         $otp=$this->otp->otp;
 
         return ['sms'=>'your otp is '.$otp];
-
-
     }
 
     /**

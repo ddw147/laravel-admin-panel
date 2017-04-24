@@ -26,19 +26,19 @@ class UserController extends Controller
 
          
         $query = User::where('id', '>', '0');
-        if(!empty($request->input('name'))) {
+        if (!empty($request->input('name'))) {
             $query->where('name', 'like', '%'. $request->input('name'). '%');
         }
 
-        if(!empty($request->input('mobile'))) {
+        if (!empty($request->input('mobile'))) {
             $query->where('mobile', 'like', '%'. $request->input('mobile'). '%');
         }
 
-        if(!empty($request->input('email'))) {
+        if (!empty($request->input('email'))) {
             $query->where('email', 'like', '%'. $request->input('email'). '%');
         }
 
-        if(!empty($request->input('is_locked'))) {
+        if (!empty($request->input('is_locked'))) {
                 $query->where('is_locked', $request->input('is_locked'));
         }
 
@@ -72,12 +72,11 @@ class UserController extends Controller
     {
         $user  = User::create($request->all());
         $roles = $request->input('roles');
-        if(!is_null($roles)) {
+        if (!is_null($roles)) {
             $user->roles()->sync($roles);
         }
 
         return redirect('/users')->with('status', 'User Successfully added');
-
     }
 
     /**
@@ -103,7 +102,6 @@ class UserController extends Controller
         $user->load('roles');
         $roles= Role::all();
         return view('user.edit', compact('user', 'roles'));
-
     }
 
     /**
@@ -118,18 +116,17 @@ class UserController extends Controller
         //
         $user->fill($request->all())->save();
          $roles = $request->input('roles');
-        if(!is_null($roles)) {
+        if (!is_null($roles)) {
             $user->roles()->sync($roles);
         }
 
         $redirects_to = $request->get('redirects_to');
 
-        if(is_null($redirects_to)) {
+        if (is_null($redirects_to)) {
             $redirects_to ='/users';
         }
 
         return redirect($redirects_to)->with('status', 'User Successfully Updated');
-
     }
 
     /**
@@ -143,12 +140,12 @@ class UserController extends Controller
         //
     }
 
-    public function block_user(Request $request, User $user)
+    public function blockUser(Request $request, User $user)
     {
         $user->block();
         return redirect()->back()->with('status', 'User Blcoked Successfully');
     }
-    public function unblock_user(Request $request, User $user)
+    public function unblockUser(Request $request, User $user)
     {
         $user->unblock();
         return redirect()->back()->with('status', 'User Unblcoked Successfully');
@@ -162,7 +159,8 @@ class UserController extends Controller
     {
         $user = Auth::user();
         $validator =  Validator::make(
-            $request->all(), [
+            $request->all(),
+            [
             'exiting-password'=>'required|',
             'password' => 'required|min:6|confirmed',
 
@@ -174,11 +172,12 @@ class UserController extends Controller
                       ->withErrors($validator);
         }
        
-     
         
-        if (!(Hash::check($request->input('exiting-password'), $user->password))) {  
-                return redirect()->back()->withErrors(['Please enter Correct Old Password']);
+        if (!$user->verifyPassword($request->input('exiting-password'))) {
+             return redirect()->back()->withErrors(['Please enter Correct Old Password']);
         }
+            
+       
 
         
         $user->fill(
@@ -188,7 +187,6 @@ class UserController extends Controller
         )->save();
 
 
-         return redirect()->back()->with(['status'=>'Password Updated Successfully']);   
-
+         return redirect()->back()->with(['status'=>'Password Updated Successfully']);
     }
 }

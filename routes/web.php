@@ -25,8 +25,8 @@ Route::group(['middleware' => ['auth','verified']], function() {
 	Route::group(['middleware' => 'role:owner'], function() {
 	    //
 	    Route::resource('users','UserController');
-	    Route::post('users-block/{user}','UserController@block_user');
-	    Route::post('users-unblock/{user}','UserController@unblock_user');
+	    Route::post('users-block/{user}','UserController@blockUser');
+	    Route::post('users-unblock/{user}','UserController@unblockUser');
 	});
 
 
