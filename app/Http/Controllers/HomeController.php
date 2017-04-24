@@ -27,7 +27,4 @@ class HomeController extends Controller
     {
         return view('sidenav');
     }
-
-
-
 }

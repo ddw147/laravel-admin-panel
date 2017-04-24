@@ -1,5 +1,11 @@
 <?php
-
+/**
+ * User Model , store user related data and its relationships
+ *
+ *  * @category Class
+ * @package  User
+ * @author   Admin admin@laraveladmin.com
+ */
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
@@ -9,6 +15,10 @@ use Zizaco\Entrust\Traits\EntrustUserTrait;
 use App\Otp;
 use Carbon\Carbon;
 use App\Notifications\OtpNotification;
+
+/**
+ * Class user will bind with users table
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -35,7 +45,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * users relationsships
+     * Users relationsships
      */
 
 
@@ -45,11 +55,11 @@ class User extends Authenticatable
     }
 
     /**
-     * get last otp
+     * Get last otp
      */
     public function lastotp()
     {
-        return  $this->otps->where('created_at','>=' , Carbon::now()->subHour())->last();
+        return  $this->otps->where('created_at', '>=', Carbon::now()->subHour())->last();
     }
 
     /**
@@ -65,36 +75,36 @@ class User extends Authenticatable
      * get providers toekn
      */
 
-    public function token($provider='')
+    public function token($provider = '')
     {
-        return $this->tokens->where('provider',$provider)->last();
+        return $this->tokens->where('provider', $provider)->last();
     }
 
 
     /**
-     *  user methods 
+     *  user methods
      */
 
     public function sendotp()
     {
         
-       $otp= $this->lastotp();
-       if(is_null($otp))
-         $otp= $this->setotp();
+        $otp= $this->lastotp();
+        if (is_null($otp)) {
+            $otp = $this->setotp();
+        }
+        
 
         $this->notify(new OtpNotification($otp));
-
     }
 
     public function setotp()
     {
-       $otp= new Otp();     
-       $otp->otp=rand(100000,999999);
-       $otp->purpose ='Registration';
-       $this->otps()->save($otp);
+        $otp= new Otp();
+        $otp->otp=rand(100000, 999999);
+        $otp->purpose ='Registration';
+        $this->otps()->save($otp);
 
-       return $otp;
-
+        return $otp;
     }
 
     public function verify()
@@ -118,11 +128,10 @@ class User extends Authenticatable
 
     
 
-    public function verify_password($oldPassword='')
-    {   
+    public function verify_password($oldPassword = '')
+    {
         echo bcrypt($oldPassword);
         dd($this->password);
-        return ($this->password == (bcrypt($oldPassword)) ); 
+        return ($this->password == (bcrypt($oldPassword)) );
     }
-
 }

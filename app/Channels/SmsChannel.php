@@ -1,17 +1,20 @@
 <?php
-
+/**
+ * this Channel is for building channel for sending sms thriough api
+ * this api use for future use
+ */
 namespace App\Channels;
 
 use Illuminate\Notifications\Notification;
-
 use Illuminate\Support\Facades\Log;
+
 class SmsChannel
 {
     /**
      * Send the given notification.
      *
-     * @param  mixed  $notifiable
-     * @param  \Illuminate\Notifications\Notification  $notification
+     * @param  mixed                                  $notifiable
+     * @param  \Illuminate\Notifications\Notification $notification
      * @return void
      */
     public function send($notifiable, Notification $notification)
@@ -22,9 +25,5 @@ class SmsChannel
               
          Log::info($message);
          Log::info($notifiable->mobile);
-
-
     }
-
-
 }

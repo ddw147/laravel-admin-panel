@@ -17,6 +17,7 @@ class CreateUserOauthTokenTable extends Migration
         Schema::create('oauth_tokens', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->string('provider');
             $table->string('token');
             $table->timestamps();

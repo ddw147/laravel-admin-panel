@@ -44,35 +44,39 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        return Validator::make(
+            $data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'mobile'=>'required|numeric|min:10|unique:users',
             'password' => 'required|min:6|confirmed',
 
-        ]);
+            ]
+        );
     }
 
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param  array $data
      * @return User
      */
     protected function create(array $data)
     {
-        $user =  User::create([
+        $user =  User::create(
+            [
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'mobile'=>$data['mobile'],
             'is_verified'=>false
-        ]);
+            ]
+        );
 
         $token = new OauthToken($data);
         $user->tokens()->save($token);

@@ -10,8 +10,8 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Support\Facades\Log;
-
 use App\User;
+
 class UserRegistered
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;

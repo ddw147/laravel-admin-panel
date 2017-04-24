@@ -12,7 +12,7 @@ class Otp extends Model
 
 
     public function user()
-    {	
-    	$this->belongsTo('App\User');
+    {    
+        $this->belongsTo('App\User');
     }
 }
